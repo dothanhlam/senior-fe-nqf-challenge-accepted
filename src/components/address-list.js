@@ -11,8 +11,7 @@ export default class AddressList extends Component {
     }
 
     deleteHandler = e => {
-        console.log('delete: ')
-     //   this.props.deleteHandler(e.target.value)
+        this.props.deleteHandler(e.target.value)
     }
 
     updateHandler = e => {
