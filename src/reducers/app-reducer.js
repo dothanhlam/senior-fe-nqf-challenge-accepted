@@ -1,4 +1,4 @@
-import {SYNC_ADDRESS, UPDATE_ADDRESS, DELETE_ADDRESS } from "../actions";
+import {SYNC_ADDRESS } from "../actions";
 
 const appReducer = (state = {}, action) => {
     switch (action.type) {
@@ -6,12 +6,8 @@ const appReducer = (state = {}, action) => {
             return {
                 ...state, ...action
             }
-
-        case UPDATE_ADDRESS:
-        case DELETE_ADDRESS:
         default:
             return state;
-
     }
 }
 

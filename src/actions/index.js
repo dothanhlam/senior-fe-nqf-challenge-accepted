@@ -1,10 +1,9 @@
 export const SYNC_ADDRESS_SAGA = 'sync_address_saga';
-
+export const ADD_ADDRESS_SAGA = 'add_address_saga';
+export const DELETE_ADDRESS_SAGA = 'delete_address_saga';
 
 export const SYNC_ADDRESS = 'sync_address';
-export const UPDATE_ADDRESS = 'update_address';
-export const DELETE_ADDRESS = 'delete_address';
-export const ADD_ADDRESS = 'add_address';
+
 
 export const syncAddress = addresses => {
     return {
@@ -13,10 +12,11 @@ export const syncAddress = addresses => {
     }
 }
 
-export const addAddress = address => {
+export const addAddressSaga = (address, selectedAddress=null) => {
     return {
-        type: ADD_ADDRESS,
+        type: ADD_ADDRESS_SAGA,
         address,
+        selectedAddress,
     }
 };
 
@@ -27,9 +27,9 @@ export const syncAddressSaga = amount => {
     }
 }
 
-export const updateAddress = address => {
+export const deleteAddressSaga = addressId => {
     return {
-        type: UPDATE_ADDRESS,
-        address,
+        type: DELETE_ADDRESS_SAGA,
+        addressId
     }
 }

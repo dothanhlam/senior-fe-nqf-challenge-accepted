@@ -1,9 +1,10 @@
 import React, {PropTypes, Component} from 'react';
 import {connect} from 'react-redux';
-
 import * as actions from '../actions';
-
 import { getAddresses } from '../reducers';
+
+import AddressForm from '../components/address-form';
+import AddressList from '../components/address-list';
 
 class MainContainer extends Component {
     static propTypes = {
@@ -13,6 +14,9 @@ class MainContainer extends Component {
 
     constructor() {
         super()
+        this.state = {
+            selectedAddress: null
+        }
     }
 
     componentDidMount() {
@@ -20,21 +24,39 @@ class MainContainer extends Component {
     }
 
 
-    buildComponent = props => {
-        const {addresses} = props;
+    submitHandler = (state, selectedAddress) => {
+        this.props.dispatch(actions.addAddressSaga(state, selectedAddress));
+        this.setState({selectedAddress: null});
+    }
+
+    deleteHandler = addressId => {
+        this.props.dispatch(actions.deleteAddressSaga(addressId));
+    }
+
+    updateHandler = addressId => {
+        this.setState(
+            {
+                selectedAddress: addressId,
+            }
+        )
+    }
+
+    buildComponent = (props, state) => {
+        const { addresses } = props;
+        const { selectedAddress } = state;
         if (addresses) {
+            const updatedAddress = {selectedAddress,   ...addresses[selectedAddress]};
             return (
                 <div>
-                    <ul>
-                    {
-                        Object.entries(addresses).map(item => {
-                            console.log(item)
-                            return (
-                                <li key={item[0]}>{item[1].street} - { item[1].district }</li>
-                            )
-                        })
-                    }
-                    </ul>
+                    <AddressForm
+                        submitHandler={this.submitHandler}
+                        updatedAddress={updatedAddress}
+                    />
+                    <AddressList
+                        addresses={addresses}
+                        deleteHandler={this.deleteHandler}
+                        updateHandler={this.updateHandler}
+                    />
                 </div>
             )
         }
@@ -45,7 +67,7 @@ class MainContainer extends Component {
     }
 
     render() {
-        return this.buildComponent(this.props)
+        return this.buildComponent(this.props, this.state)
     }
 }
 
