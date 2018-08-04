@@ -1,20 +1,25 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import reduxApp from './reducers/';
-import {hashHistory} from 'react-router';
-import {syncHistoryWithStore} from 'react-router-redux';
-import {Router} from 'react-router';
-
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './sagas';
+import { hashHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+import { Router } from 'react-router';
 import routes from './routes';
+import 'whatwg-fetch'
 
-const initialState = {};
+const initialState = {}
+const sagaMiddleware = createSagaMiddleware()
 
 let store = createStore(
     reduxApp,
-    initialState);
+    initialState,
+    applyMiddleware(sagaMiddleware));
 
+sagaMiddleware.run(rootSaga);
 
 const createSelectLocationState = () => {
     let prevRoutingState, prevRoutingStateJS
