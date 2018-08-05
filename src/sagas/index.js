@@ -5,6 +5,8 @@ import { take, call, put } from 'redux-saga/effects';
 
 import * as actions from '../actions';
 import { searchAddressSaga } from "./google-map";
+import { exportCSVFileSaga } from "./csv-export";
+import {csvExportSaga} from "../actions";
 
 function* syncAddressList() {
     const channel = yield call(rsf.database.channel, 'addresses');
@@ -51,10 +53,22 @@ function* getUserLocation() {
     }
 }
 
+function* exportToCSV({data}) {
+ //   console.log('data: ', data);
+    if (data) {
+        yield call(exportCSVFileSaga, data)
+    }
+    else {
+        console.log('data not found')
+    }
+
+}
+
 function* watchAddress() {
     yield takeEvery(actions.SYNC_ADDRESS_SAGA, syncAddressList);
     yield takeEvery(actions.ADD_ADDRESS_SAGA, submitAddress);
     yield takeEvery(actions.DELETE_ADDRESS_SAGA, deleteAddress);
+    yield takeEvery(actions.CSV_EXPORT_SAGA, exportToCSV);
 }
 
 function* watchLocation() {

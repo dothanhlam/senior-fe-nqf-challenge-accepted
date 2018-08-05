@@ -3,6 +3,7 @@ export const ADD_ADDRESS_SAGA = 'add_address_saga';
 export const DELETE_ADDRESS_SAGA = 'delete_address_saga';
 export const CURRENT_LOCATION_SAGA = 'current_location_saga';
 export const SEARCH_LOCATION_SAGA = 'search_location_saga';
+export const CSV_EXPORT_SAGA = 'csv_support_saga';
 
 export const SYNC_ADDRESS = 'sync_address';
 export const UPDATE_LOCATION = 'update_location';
@@ -57,9 +58,16 @@ export const getCurrentLocationSaga = () => {
     }
 }
 
-export const serchLocationSaga = (query) => {
+export const serchLocationSaga = query => {
     return {
         type: SEARCH_LOCATION_SAGA,
         query,
+    }
+}
+
+export const csvExportSaga = data => {
+    return {
+        type: CSV_EXPORT_SAGA,
+        data
     }
 }

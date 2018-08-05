@@ -55,6 +55,10 @@ class MainContainer extends Component {
         this.props.dispatch(actions.serchLocationSaga(query));
     }
 
+    exportCSVHandler = () => {
+        this.props.dispatch(actions.csvExportSaga(this.props.addresses));
+    }
+
     buildComponent = (props, state) => {
         const { addresses, location, searchLocation } = props;
         const { selectedAddress } = state;
@@ -85,6 +89,7 @@ class MainContainer extends Component {
                         addresses={addresses}
                         deleteHandler={this.deleteHandler}
                         updateHandler={this.updateHandler}
+                        exportCSVHandler={this.exportCSVHandler}
                     />
                 </Grid>
             )

@@ -1,13 +1,13 @@
 import { Component, PropTypes } from "react";
 import React from "react";
-import { Table, Panel, Button } from 'react-bootstrap';
+import { Table, Panel, Button, ButtonToolbar } from 'react-bootstrap';
 
 export default class AddressList extends Component {
     static propTypes = {
         addresses: PropTypes.object,
         deleteHandler: PropTypes.func.isRequired,
         updateHandler: PropTypes.func.isRequired,
-
+        exportCSVHandler: PropTypes.func,
     }
 
     deleteHandler = e => {
@@ -18,8 +18,13 @@ export default class AddressList extends Component {
         this.props.updateHandler(e.target.value);
     }
 
+    downloadCSVHandler = e => {
+        this.props.exportCSVHandler(this.props.addresses);
+    }
+
     buildComponent = (props, state) => {
         const { addresses } = props;
+        const allAddress = Object.entries(addresses);
         return (
             <Panel>
                 <Panel.Heading>
@@ -39,7 +44,7 @@ export default class AddressList extends Component {
                         </thead>
                         <tbody>
                         {
-                            Object.entries(addresses).map(item => {
+                            allAddress.map(item => {
                                 const { address } = item[1]
                                 return (
                                     <tr key={item[0]}>
@@ -49,20 +54,22 @@ export default class AddressList extends Component {
                                         <td>{address.city}</td>
                                         <td>{address.country}</td>
                                         <td>
-                                            <Button
-                                                value={item[0]}
-                                                bsSize="xsmall"
-                                                bsStyle="primary"
-                                                onClick={this.updateHandler}>
-                                                Edit
-                                            </Button>
-                                            <Button
-                                                value={item[0]}
-                                                bsSize="xsmall"
-                                                bsStyle="danger"
-                                                onClick={this.deleteHandler}>
-                                                Delete
-                                            </Button>
+                                            <ButtonToolbar>
+                                                <Button
+                                                    value={item[0]}
+                                                    bsSize="xsmall"
+                                                    bsStyle="primary"
+                                                    onClick={this.updateHandler}>
+                                                    Edit
+                                                </Button>
+                                                <Button
+                                                    value={item[0]}
+                                                    bsSize="xsmall"
+                                                    bsStyle="danger"
+                                                    onClick={this.deleteHandler}>
+                                                    Delete
+                                                </Button>
+                                            </ButtonToolbar>
                                         </td>
                                     </tr>
                                 )
@@ -71,7 +78,8 @@ export default class AddressList extends Component {
                         </tbody>
                     </Table>
                 </Panel.Body>
-                <Panel.Footer>total: {} </Panel.Footer>
+                <Panel.Footer>Total: {allAddress.length} </Panel.Footer>
+                <Button bsSize="xsmall" bsStyle="primary" onClick={this.downloadCSVHandler}>Download CSV</Button>
             </Panel>
         );
     }
