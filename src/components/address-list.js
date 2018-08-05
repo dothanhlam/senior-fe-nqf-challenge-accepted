@@ -78,8 +78,11 @@ export default class AddressList extends Component {
                         </tbody>
                     </Table>
                 </Panel.Body>
-                <Panel.Footer>Total: {allAddress.length} </Panel.Footer>
-                <Button bsSize="xsmall" bsStyle="primary" onClick={this.downloadCSVHandler}>Download CSV</Button>
+                <Panel.Footer>
+                    <Button bsSize="xsmall" bsStyle="primary" onClick={this.downloadCSVHandler}>
+                        Total: {allAddress.length} - Download CSV
+                    </Button>
+                </Panel.Footer>
             </Panel>
         );
     }

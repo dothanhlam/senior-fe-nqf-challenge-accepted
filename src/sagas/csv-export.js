@@ -46,8 +46,9 @@ export function* exportCSVFileSaga(data) {
     const fileName = `address-${new Date().getTime()}.csv`;
     if (navigator.msSaveBlob) { // IE 10+
         navigator.msSaveBlob(blob, fileName);
-    } else {
-        var link = document.createElement("a");
+    }
+    else {
+        const link = document.createElement("a");
         if (link.download !== undefined) { // feature detection
             // Browsers that support HTML5 download attribute
             var url = URL.createObjectURL(blob);
