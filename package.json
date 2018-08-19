@@ -15,8 +15,6 @@
   },
   "keywords": [
     "react",
-    "redux",
-    "redux-saga",
     "google",
     "firebase",
     "heroku",
@@ -31,18 +29,15 @@
   "dependencies": {
     "axios": "^0.18.0",
     "firebase": "^5.3.0",
+    "firebase-nest": "^0.7.1",
+    "mobx": "^5.0.3",
+    "mobx-firebase-store": "^1.2.1",
+    "mobx-react": "^5.2.5",
     "react": "15.4.1",
     "react-bootstrap": "^0.32.1",
     "react-dom": "15.4.1",
     "react-google-maps": "^9.4.5",
-    "react-redux": "4.4.5",
-    "react-router": "2.8.1",
-    "react-router-redux": "4.0.6",
-    "redux": "3.5.2",
-    "redux-form": "6.2.0",
-    "redux-saga": "^0.12.0",
-    "redux-saga-firebase": "^0.7.0",
-    "whatwg-fetch": "^2.0.4"
+    "react-router": "2.8.1"
   },
   "devDependencies": {
     "babel-plugin-transform-runtime": "6.15.0",
