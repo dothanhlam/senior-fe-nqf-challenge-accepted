@@ -15,7 +15,7 @@ export default class AppStore extends MobxFirebaseStore {
         return this.fb.child('addresses');
     }
 
-    getAdressList() {
+    getAddresses() {
         return this.getData('addresses')
     }
 
@@ -24,7 +24,8 @@ export default class AppStore extends MobxFirebaseStore {
             {
                 subKey,
                 asList: true,
-                onData: (type, snapshot) =>  snapshot.val()
+                onData: (type, snapshot) =>  snapshot.val(),
+                resolveFirebaseRef: this.resolveFirebaseQuery
             }
         ]
     }

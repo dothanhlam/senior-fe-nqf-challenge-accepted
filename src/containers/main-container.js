@@ -3,6 +3,9 @@ import React, {PropTypes, Component} from 'react';
 import { Grid, Row, Col } from "react-bootstrap";
 
 import { observer } from 'mobx-react';
+import AddressForm from '../components/address-form';
+import AddressList from '../components/address-list';
+
 import { createAutoSubscriber } from 'firebase-nest';
 
 class MainContainer extends Component {
@@ -11,13 +14,21 @@ class MainContainer extends Component {
         super()
     }
 
-    componentDidMount() {
+    submitHandler = (state, selectedAddress) => {
     }
 
+    deleteHandler = addressId => {
+    }
+
+    updateHandler = addressId => {
+    }
+
+    exportCSVHandler = () => {
+    }
 
     buildComponent = (props, state) => {
         const { store } = props;
-        const addresses = store.getAdressList();
+        const addresses = store.getAddresses();
 
         if (!addresses) {
             return (
@@ -25,10 +36,31 @@ class MainContainer extends Component {
             )
         }
 
-        for (let value of addresses.entries()) {
-            console.log(value)
-        }
-        return (<div>ok</div>);
+        let addrList = [];
+        addresses.forEach(value => {
+            const { city, country, district, id, street, ward } = value['address'];
+            addrList.push({
+                city, country, district, id, street, ward
+            })
+        });
+
+        return (
+            <Grid>
+                <Row className="show-grid">
+                    <Col xs={12} md={8}>
+                        <AddressForm
+                            submitHandler={this.submitHandler}/>
+                    </Col>
+                </Row>
+                <AddressList
+                    addresses={addrList}
+                    deleteHandler={this.deleteHandler}
+                    updateHandler={this.updateHandler}
+                    exportCSVHandler={this.exportCSVHandler}
+                />
+            </Grid>
+        )
+
     }
 
     render() {

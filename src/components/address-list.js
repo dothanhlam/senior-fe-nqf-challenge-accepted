@@ -4,7 +4,7 @@ import { Table, Panel, Button, ButtonToolbar } from 'react-bootstrap';
 
 export default class AddressList extends Component {
     static propTypes = {
-        addresses: PropTypes.object,
+        addresses: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
         deleteHandler: PropTypes.func.isRequired,
         updateHandler: PropTypes.func.isRequired,
         exportCSVHandler: PropTypes.func,
@@ -45,7 +45,7 @@ export default class AddressList extends Component {
                         <tbody>
                         {
                             allAddress.map(item => {
-                                const { address } = item[1]
+                                let address = item[1];
                                 return (
                                     <tr key={item[0]}>
                                         <td>{address.street}</td>
